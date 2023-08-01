@@ -2,75 +2,76 @@ package com.sky.SpringDemo.services;
 
 
 import com.sky.SpringDemo.domain.Game;
+
+import com.sky.SpringDemo.repos.GameRepo;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Primary
 @Service
-public class GameServiceList implements GameService {
+public class GameServiceDB implements GameService {
+    private GameRepo repo;
 
-    private List<Game> games = new ArrayList<>();
+    public GameServiceDB(GameRepo repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Game create(Game game) {
-        this.games.add(game);
-        return this.games.get(this.games.size() - 1);
+        return this.repo.save(game);
     }
 
     @Override
     public List<Game> create(List<Game> newGames) {
-        if (this.games.addAll(newGames)) {
-            return newGames;
-        } else {
-            return null;
-        }
-
+        return this.repo.saveAll(newGames);
     }
 
     @Override
     public Game get(int id) {
-        return this.games.get(id);
+        return null;
     }
 
     @Override
     public List<Game> getAll() {
-        return this.games;
+        return this.repo.findAll();
     }
 
     @Override
     public Game getById(int id) {
-        Game found = this.games.get(id);
-        return found;
+        Optional<Game> optionalGame = this.repo.findById(id);
+        Game actualGame = optionalGame.get();
+
+        return actualGame;
     }
 
     @Override
     public Game update(int id, String name, String genre, Integer yearOfRelease) {
-        Game toUpdate = this.games.get(id);
+        Game toUpdate = this.getById(id);
+
         if (name != null) toUpdate.setName(name);
         if (genre != null) toUpdate.setGenre(genre);
         if (yearOfRelease != null) toUpdate.setYearOfRelease(yearOfRelease);
-        return toUpdate;
+
+        return this.repo.save(toUpdate);
     }
 
     @Override
     public Game remove(int id) {
-
-        return this.games.remove(id);
+        Game toDelete = this.getById(id);
+        this.repo.deleteById(id);
+        return toDelete;
     }
 
     @Override
     public List<Game> findByName(String name) {
-        List<Game> found = new ArrayList<>();
-        for (Game g : this.games) {
-            if (name.equals(g.getName())) found.add(g);
-        }
-        return found;
+        return this.repo.findByNameContainsIgnoreCase(name);
     }
 
     @Override
     public String findGenreByName(String name) {
-        return null;
+        return this.repo.findGenreByName(name);
     }
-
 }

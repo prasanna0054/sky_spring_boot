@@ -1,7 +1,13 @@
 package com.sky.SpringDemo.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Game {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private String genre;
     private Integer yearOfRelease;
