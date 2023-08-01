@@ -3,6 +3,7 @@ package com.sky.SpringDemo.services;
 
 import com.sky.SpringDemo.domain.Game;
 
+import com.sky.SpringDemo.exceptions.GameNotFoundException;
 import com.sky.SpringDemo.repos.GameRepo;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,7 @@ public class GameServiceDB implements GameService {
 
     @Override
     public Game getById(int id) {
-        Optional<Game> optionalGame = this.repo.findById(id);
-        Game actualGame = optionalGame.get();
+        Game actualGame = this.repo.findById(id).orElseThrow(() -> new GameNotFoundException());
 
         return actualGame;
     }
