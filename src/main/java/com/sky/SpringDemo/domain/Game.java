@@ -3,7 +3,6 @@ package com.sky.SpringDemo.domain;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -29,6 +28,21 @@ public class Game {
 
     // REQUIRED TO CREATE A DEFAULT CONSTRUCTOR
     public Game() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Game(Integer id, String name, String genre, Integer yearOfRelease){
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+        this.yearOfRelease = yearOfRelease;
     }
 
     public String getName() {
