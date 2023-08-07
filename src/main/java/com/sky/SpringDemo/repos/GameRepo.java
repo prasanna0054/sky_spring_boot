@@ -12,5 +12,7 @@ public interface GameRepo extends JpaRepository<Game, Integer> {
     // JPQL -> Java Persistence Query Language
     @Query(value = "SELECT genre FROM game WHERE name = ?1", nativeQuery = true)
     String findGenreByName(String name);
+
+    Object deleteById(Game toRemove);
 }
 

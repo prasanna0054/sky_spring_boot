@@ -30,6 +30,9 @@ public class Game {
     public Game() {
     }
 
+    public Game(Integer id) {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -76,5 +79,27 @@ public class Game {
                 ", genre='" + genre + '\'' +
                 ", yearOfRelease=" + yearOfRelease +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Game game = (Game) o;
+
+        if (!id.equals(game.id)) return false;
+        if (!name.equals(game.name)) return false;
+        if (!genre.equals(game.genre)) return false;
+        return yearOfRelease.equals(game.yearOfRelease);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + yearOfRelease.hashCode();
+        return result;
     }
 }
