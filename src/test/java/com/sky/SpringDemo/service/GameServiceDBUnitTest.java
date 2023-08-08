@@ -23,11 +23,11 @@ public class GameServiceDBUnitTest {
     private GameRepo repo;
 
     @Test
-    void testUpdate(){
-        int id =1;
+    void testUpdate() {
+        int id = 1;
         Game existing = new Game(id, "NFS", "Racing", 2007);
-        String name ="NFS Hot Pursuit";
-        String genre ="Arcade";
+        String name = "NFS Hot Pursuit";
+        String genre = "Arcade";
         Integer yearOfRelease = 2009;
 
         Game updated = new Game(id, name, genre, yearOfRelease);
@@ -35,7 +35,7 @@ public class GameServiceDBUnitTest {
         Mockito.when(this.repo.findById(id)).thenReturn(Optional.of(existing));
         Mockito.when(this.repo.save(updated)).thenReturn(updated);
 
-        Assertions.assertEquals(updated,this.service.update(id, name, genre, yearOfRelease));
+        Assertions.assertEquals(updated, this.service.update(id, name, genre, yearOfRelease));
 
         Mockito.verify(this.repo, Mockito.times(1)).findById(id);
         Mockito.verify(this.repo, Mockito.times(1)).save(updated);
@@ -44,17 +44,17 @@ public class GameServiceDBUnitTest {
     }
 
     @Test
-    void testRemove(){
-        Integer id =1;
+    void testRemove() {
+        Integer id = 1;
         Game existing = new Game(id, "NFS", "Racing", 2007);
 //        Game toRemove = new Game(id);
         Mockito.when(this.repo.findById(id)).thenReturn(Optional.of(existing));
-        Assertions.assertEquals(existing,this.service.remove(id));
+        Assertions.assertEquals(existing, this.service.remove(id));
     }
 
     @Test
-    void testGetAll(){
-        List <Game> gameList = new ArrayList<>(List.of(new Game(1, "NFS", "Racing", 2007)));
+    void testGetAll() {
+        List<Game> gameList = new ArrayList<>(List.of(new Game(1, "NFS", "Racing", 2007)));
 
         Mockito.when(this.repo.findAll()).thenReturn(gameList);
         Assertions.assertEquals(gameList, this.service.getAll());
@@ -62,8 +62,7 @@ public class GameServiceDBUnitTest {
     }
 
     @Test
-    void testCreate(){
-
+    void testCreate() {
         Game newGame = new Game("NFS", "Racing", 2007);
 
         Mockito.when(this.repo.save(newGame)).thenReturn(newGame);

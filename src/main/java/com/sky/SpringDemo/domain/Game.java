@@ -19,6 +19,16 @@ public class Game {
     private String genre;
     @Range(min = 1950, max = 2050)
     private Integer yearOfRelease;
+@ManyToOne(targetEntity = GameProvider.class)
+private GameProvider gameProvider;
+
+    public GameProvider getGameProvider() {
+        return gameProvider;
+    }
+
+    public void setGameProvider(GameProvider gameProvider) {
+        this.gameProvider = gameProvider;
+    }
 
     public Game(String name, String genre, Integer yearOfRelease) {
         this.name = name;
